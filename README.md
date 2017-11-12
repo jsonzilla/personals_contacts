@@ -10,7 +10,7 @@ Need install MongoDB
 https://docs.mongodb.com/manual/installation/
 
 ```
-npm init
+npm install
 npm start
 ```
 
