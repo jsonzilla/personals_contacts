@@ -1,0 +1,19 @@
+{
+  "name": "contactmananger",
+  "version": "1.0.0",
+  "description": "Contant Mananger REST Service",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jeison Cardoso",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "nodemon": "^1.12.1"
+  },
+  "dependencies": {
+    "express": "^4.16.2",
+    "mongoose": "^4.13.1"
+  }
+}
