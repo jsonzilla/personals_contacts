@@ -1,30 +1,22 @@
 module.exports = function(app) {
-    const controller = require('../controllers/controller');
+    const personController = require('../controllers/person');
+    const contactController = require('../controllers/contact');
     
     app.route('/person')
-        .get(controller.list_all_person)
-        .post(controller.create_a_person);
+        .get(personController.list_all_person)
+        .post(personController.create_a_person);
 
     app.route('/person/:personId')
-        .get(controller.get_a_person)
-        .put(controller.update_a_person)
-        .delete(controller.delete_a_person);
+        .get(personController.get_a_person)
+        .put(personController.update_a_person)
+        .delete(personController.delete_a_person);
 
     app.route('/contact')
-        .get(controller.list_all_contacts)
-        .post(controller.create_a_contact);
+        .get(contactController.list_all_contacts)
+        .post(contactController.create_a_contact);
 
     app.route('/contact/:contactId')
-        .get(controller.get_a_contact)
-        .put(controller.update_a_contact)
-        .delete(controller.delete_a_contact);        
-
-    app.route('/person/:personId/contact')
-        .get(controller.get_all_contacts_person)
-        .post(controller.create_a_contact_to_person);
-
-    app.route('/person/:personId/contact/:contactId')
-        .get(controller.get_a_contact)
-        .put(controller.update_a_contact)
-        .delete(controller.delete_a_contact);      
+        .get(contactController.get_a_contact)
+        .put(contactController.update_a_contact)
+        .delete(contactController.delete_a_contact);             
 };

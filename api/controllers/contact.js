@@ -2,75 +2,6 @@ const mongoose = require('mongoose');
 const Person = mongoose.model('Person');
 const Contact = mongoose.model('Contact');
 
-exports.list_all_person = function(req, res) {
-    Person.find({}, function(err, person) {
-        if (err) res.send(err);
-        res.json(person);
-    });
-};
-
-exports.create_a_person = function(req, res) {
-    let new_person = new Person(req.body);
-    new_person.save(function(err, person) {
-        if (err) res.send(err);
-        res.json(person);
-    });
-};
-
-exports.get_a_person = function(req, res) {
-    Person.findById(req.params.personId, function(err, person) {
-        if (err) res.send(err);
-        res.json(person);
-    });
-};
-
-exports.update_a_person = function(req, res) {
-    Person.findOneAndUpdate({_id: req.params.personId}, req.body, {new: true}, function(err, person) {
-        if (err) res.send(err);
-        res.json(person);
-    });
-};
-
-function delete_contact (id, res) {
-    Contact.remove({_id: id}, function(err) {
-        if (err) res.send(err);                
-    });
-}
-
-exports.delete_a_person = function(req, res) {
-    Contact.find({owner: req.params.personId}, function(err, contacts) {
-        if (err) res.send(err);
-        contacts.map(c => delete_contact(c._id, res));
-    });
-    Person.remove({_id: req.params.personId}, function(err) {
-        if (err) res.send(err);
-        res.json({ message: 'Person successfully deleted'});
-    });
-};
-
-exports.get_all_contacts_person = function(req, res) {
-    Contact.find({owner: req.params.personId}, function(err, contacts) {
-        if (err) res.send(err);
-        res.json(contacts);
-    });
-};
-
-exports.create_a_contact_to_person = function(req, res) {
-    Person.findById(req.params.personId, function(err, person) {
-        if (err) res.send(err);
-        const contact = new Contact(req.body);
-        contact.owner = req.params.personId;
-        contact.save(function(err, contact) {
-            if (err) res.send(err);
-            person.children.push(contact._id);
-            person.save(function(err) {
-                if (err) res.send(err);
-            }); 
-            res.json(person);
-        });
-    }); 
-};
-
 exports.list_all_contacts = function(req, res) {
     Contact.find({}, function(err, contact) {
         if (err) res.send(err);
@@ -104,7 +35,6 @@ exports.get_a_contact = function(req, res) {
         }
     });
 };
-
 
 exports.update_a_contact = function(req, res) {
     Contact.findById(req.params.contactId, function(err, contact) {
@@ -156,7 +86,7 @@ exports.delete_a_contact = function(req, res) {
             remove_contact_from_person_childs(req.body.owner, req.params.contactId);
             Contact.remove({_id: req.params.contactId}, function(err) {
                 if (err) res.send(err);                
-                res.json({ message: 'Contact successfully deleted'});
+                res.json(contact);
             });
         }
         else 
